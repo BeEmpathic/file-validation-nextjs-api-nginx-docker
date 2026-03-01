@@ -7,8 +7,6 @@
 
 */
 
-// the validation sucks I will do a better one on other brunch this one is like okay if you need it at home otherwise don't trust it
-
 import fs from "fs/promises";
 import path from "path";
 import { v4 } from "uuid";
@@ -23,7 +21,7 @@ export async function POST(request: Request) {
   }
 
   // The message returned to the user
-  let message: string[] = [];
+  const message: string[] = [];
   console.log("the files at the begining: ", files);
 
   // predefining an array and path for uploaded files, and their names
@@ -104,16 +102,18 @@ export async function POST(request: Request) {
           message: "",
         });
         message.push(`uploaded successfully as ${fileServerName}`);
+        return new Response(JSON.stringify(message), {
+          status: 200,
+        });
       } catch (error) {
         console.error("Error saving file: ", error);
 
         message.push(`Error saving file: ${file.name}: ${error}\n`);
+
+        return new Response(JSON.stringify(message), {
+          status: 200,
+        });
       }
     }),
   );
-
-  return new Response(JSON.stringify(message), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
 }

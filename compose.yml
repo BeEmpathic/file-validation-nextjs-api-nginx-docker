@@ -13,16 +13,21 @@ services:
         - action: sync 
           path: ./app
           target: /file-validation-nextjs-nginx/app
+          initial_sync: true
         - action: sync
           path: ./next.config.ts
           target: /file-validation-nextjs-nginx/next.config.ts
+          initial_sync: true
         - action: sync
           path: ./public
           target: /file-validation-nextjs-nginx/public
+          initial_sync: true
         - action: sync
           path: ./_lib
           target: /file-validation-nextjs-nginx/_lib
-        
+          initial_sync: true
+
+
         - action: rebuild
           path: ./package.json
         

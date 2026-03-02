@@ -16,26 +16,31 @@ export async function fileUpload(files: File[]) {
       formData.append("files", file);
     });
 
-    const response = await fetch("/api/file-upload", {
+    const response = await fetch("/api/test", {
       method: "POST",
       body: formData,
     });
 
-    console.log(response);
+    console.log("Raw response:", response);
 
     if (!response.ok) {
       if (response.status === 413) {
         message.push("The total size of the files is too large");
         return message;
       }
+
+      message.push("Something wrong with the respone");
+      return message;
     }
 
     const result = await response.json();
+    // The response retruned to the user
 
-    return { success: true, data: result };
+    console.log("The result", result);
+    return { success: true, result: result };
   } catch (e: any) {
     console.error(e);
-    message.push(e);
+    message.push({ success: false, e });
     return message;
   }
 }

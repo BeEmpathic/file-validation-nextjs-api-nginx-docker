@@ -6,7 +6,7 @@ export default function Page() {
   // make it so it's just an property / object on the result
   //  containing the messsage which is array of strings
   // instead of this what you have now
-  const initialResult = [{ message: "No files send yet" }];
+  const initialResult = { message: ["No files send yet"], success: true };
 
   const [result, setResult] = useState(initialResult);
   const [files, setFiles] = useState<File[]>([]);
@@ -22,9 +22,11 @@ export default function Page() {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    setResult([await fileUpload(files)]);
+    const response = await fileUpload(files);
+    setResult(response);
     console.log("The result", result);
+
+    console.log("Result message:", result.message);
   }
 
   return (

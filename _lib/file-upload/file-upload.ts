@@ -36,8 +36,7 @@ export async function fileUpload(files: File[]) {
     const result = await response.json();
     // The response retruned to the user
 
-    console.log("The result", result);
-    return { success: true, result: result };
+    return result;
   } catch (e: any) {
     console.error(e);
     message.push({ success: false, e });

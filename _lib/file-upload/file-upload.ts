@@ -1,13 +1,14 @@
 export async function fileUpload(files: File[]) {
-  const message: Object[] = [];
+  let result = {
+    message: ["Empty result, something wen't wrong!"],
+    success: false,
+    error: undefined,
+  };
 
   if (files.length === 0) {
-    message.push({
-      success: false,
-      error: "No files detected something is off",
-    });
+    result.message = ["No files detected something is off"];
 
-    return message;
+    return result;
   }
 
   try {
@@ -25,21 +26,24 @@ export async function fileUpload(files: File[]) {
 
     if (!response.ok) {
       if (response.status === 413) {
-        message.push("The total size of the files is too large");
-        return message;
+        result.message = ["The total size of the files is too large"];
+        return result;
       }
 
-      message.push("Something wrong with the respone");
-      return message;
+      result.message = ["Something is wrong with the respone"];
+      return result;
     }
-
-    const result = await response.json();
+    // this overwrites entier resultat you should do it wiht const instead of let somehow
+    result = await response.json();
     // The response retruned to the user
 
     return result;
+
+    // there is type of any on error check if you can do something about it.
   } catch (e: any) {
     console.error(e);
-    message.push({ success: false, e });
-    return message;
+    result.message = ["Something went wrong! We got unusual error"];
+    result.error = e;
+    return result;
   }
 }

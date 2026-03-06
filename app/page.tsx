@@ -17,16 +17,17 @@ export default function Page() {
     }
 
     setFiles(Array.from(e.target.files));
-    console.log(files);
   }
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: any) {
     event.preventDefault();
     const response = await fileUpload(files);
     setResult(response);
     console.log("The result", result);
 
     console.log("Result message:", result.message);
+
+    console.log(files);
   }
 
   return (

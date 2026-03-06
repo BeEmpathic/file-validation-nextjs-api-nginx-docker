@@ -2,7 +2,7 @@ export async function fileUpload(files: File[]) {
   let result = {
     message: ["Empty result, something wen't wrong!"],
     success: false,
-    error: undefined,
+    error: "No errors, yet",
   };
 
   if (files.length === 0) {
@@ -44,6 +44,7 @@ export async function fileUpload(files: File[]) {
     console.error(e);
     result.message = ["Something went wrong! We got unusual error"];
     result.error = e;
+    result.success = false;
     return result;
   }
 }
